@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, FunctionComponent, useState } from "react";
+import { createContext, useState } from "react";
 import { MessageProps } from "./message.types";
 
 export type MessageContextProps = {
