@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-function Home() {
+export default function Home() {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <Head>
@@ -12,5 +12,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home();

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "모두가 즐거운 교육공간, 클래스뮤즈",
 };
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko">
       <Head>
@@ -32,4 +32,4 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default Layout;
+export default RootLayout;
