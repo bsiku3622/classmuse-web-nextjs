@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { FaBars, FaBuffer, FaTimes } from "react-icons/fa";
 
-export default () => {
+const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
 
   let status = "not authenticated";
@@ -149,3 +149,5 @@ export default () => {
     </nav>
   );
 };
+
+export default Navbar;

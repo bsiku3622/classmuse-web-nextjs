@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default () => {
+const Price = () => {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <Head>
@@ -12,3 +12,5 @@ export default () => {
     </div>
   );
 };
+
+export default Price;
