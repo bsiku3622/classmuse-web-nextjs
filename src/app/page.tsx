@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Index = () => {
+const Home = () => {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <Head>
@@ -13,4 +13,4 @@ const Index = () => {
   );
 };
 
-export default Index();
+export default Home();
