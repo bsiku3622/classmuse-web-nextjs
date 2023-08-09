@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <Head>
@@ -11,4 +11,6 @@ export default function Home() {
       <h1 className="text-6xl font-bold">Welcome to Classmuse</h1>
     </div>
   );
-}
+};
+
+export default Home;
