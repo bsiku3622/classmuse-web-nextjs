@@ -19,7 +19,7 @@ const FORM_VALUES: FormFieldProps = {
   password: "",
 };
 
-const Auth = (props: any) => {
+const Auth = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
 
