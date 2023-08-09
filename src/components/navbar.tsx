@@ -74,15 +74,12 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="hidden md:flex items-center space-x-1">
-              <a href="/login" className="py-5 px-3">
-                Login
-              </a>
-              <a
-                href="/signup"
+              <Link
+                href="/auth"
                 className="py-2 px-3 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 hover:text-yellow-800 rounded transition duration-300"
               >
-                Signup
-              </a>
+                로그인
+              </Link>
             </div>
           )}
           {/* mobile menu */}
@@ -141,16 +138,10 @@ const Navbar = () => {
         ) : (
           <div>
             <Link
-              href="/login"
+              href="/auth"
               className="block py-2 px-4 text-sm hover:bg-gray-200"
             >
               로그인
-            </Link>
-            <Link
-              href="/signup"
-              className="block py-2 px-4 text-sm hover:bg-gray-200"
-            >
-              회원가입
             </Link>
           </div>
         )}

@@ -13,19 +13,3 @@ export const useFormFields = <T>(
   const resetFormFields = () => setValues(initialValues);
   return [values, handleChange, resetFormFields];
 };
-
-export type MessageType = "default" | "success" | "error";
-
-export type MessageProps = {
-  type: MessageType;
-  payload: string;
-};
-
-export const useMessage = <MessageProps>(
-  initialValues: MessageProps
-): [MessageProps, (mes: MessageProps) => void] => {
-  const [message, setMessage] = useState<MessageProps>(initialValues);
-
-  const handleMessage = (mes: MessageProps) => setMessage(mes);
-  return [message, handleMessage];
-};
