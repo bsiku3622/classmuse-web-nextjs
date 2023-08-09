@@ -39,7 +39,7 @@ const Auth = () => {
         handleMessage?.({ message: error.message, type: "error" });
       } else {
         handleMessage?.({
-          payload:
+          message:
             "Signup successful. Please check your inbox for a confirmation email!",
           type: "success",
         });
