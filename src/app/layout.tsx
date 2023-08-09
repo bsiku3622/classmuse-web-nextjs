@@ -1,15 +1,15 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+// import { Noto_Sans_KR } from "next/font/google";
 import Navbar from "../components/navbar";
 import Head from "next/head";
 import { MessageProvider } from "../lib/message";
 
-const notoSansKR = Noto_Sans_KR({
-  preload: true,
-  subsets: ["latin"],
-  weight: ["100", "300", "400", "500", "700", "900"],
-});
+// const notoSansKR = Noto_Sans_KR({
+//   preload: true,
+//   subsets: ["latin"],
+//   weight: ["100", "300", "400", "500", "700", "900"],
+// });
 
 export const metadata: Metadata = {
   title: "클래스뮤즈",
@@ -23,7 +23,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <meta content="width=device-width, initial-scale=1" name="viewport" />
       </Head>
       <MessageProvider>
-        <body className={`${notoSansKR.className} w-full p-0`}>
+        <body className={`w-full p-0`}>
           <Navbar />
           {children}
         </body>
@@ -31,5 +31,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     </html>
   );
 };
+Layout.displayName = "Layout";
 
 export default Layout;

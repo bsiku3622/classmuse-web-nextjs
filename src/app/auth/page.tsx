@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import { authInstance } from "../../lib/supabase";
 import classNames from "classnames";
 import { useFormFields } from "../../lib/utils";
-import { MessageProvider, useMessage } from "../../lib/message";
+import { useMessage } from "../../lib/message";
 
 type FormFieldProps = {
   email: string;
@@ -88,6 +88,7 @@ const Auth: React.FC = (props) => {
   };
 
   return (
+    // eslint-disable-next-line react/jsx-key
     <div className="container px-5 py-10 mx-auto max-w-2xl">
       <div className="w-full text-center mb-4 flex flex-col place-items-center">
         {isSignIn ? (
