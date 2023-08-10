@@ -29,7 +29,7 @@ const Auth = ({ params }: { params: { mode: string } }) => {
   const [isLoginMode, setisLoginMode] = useState(true);
 
   const { loading, signIn, signUp, oAuthSignIn } = useAuth();
-  const { messages, handleMessage } = useMessage();
+  const { messages } = useMessage();
 
   const [values, handleChange, resetFormFields] =
     useFormFields<FormFieldProps>(FORM_VALUES);
@@ -51,8 +51,8 @@ const Auth = ({ params }: { params: { mode: string } }) => {
         ) : (
           <FaLock className="w-6 h-6" />
         )}
-        <h1 className="text-2xl md:text-4xl text-gray-700 font-semibold">
-          {isLoginMode ? "Log In" : "Sign Up"}
+        <h1 className="text-2xl md:text-4xl text-gray-700 font-bold">
+          {isLoginMode ? "로그인" : "회원가입"}
         </h1>
       </div>
       {messages &&
@@ -78,14 +78,14 @@ const Auth = ({ params }: { params: { mode: string } }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="email"
             >
-              Email
+              이메일 주소
             </label>
             <input
               className="shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-64"
               id="email"
               name="email"
               type="email"
-              placeholder="Your Email"
+              placeholder="이메일 주소"
               required
               value={values.email}
               onChange={handleChange}
@@ -96,14 +96,14 @@ const Auth = ({ params }: { params: { mode: string } }) => {
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
             >
-              Password
+              비밀번호
             </label>
             <input
               className="shadow appearance-none border border-black-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline w-64"
               id="password"
               name="password"
               type="password"
-              placeholder="Your password"
+              placeholder="비밀번호 (8자 이상)"
               required
               value={values.password}
               onChange={handleChange}
@@ -111,10 +111,10 @@ const Auth = ({ params }: { params: { mode: string } }) => {
           </div>
           <div className="gap-2">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              {isLoginMode ? "Log In" : "Sign Up"}
+              {isLoginMode ? "로그인" : "회원가입"}
             </button>
           </div>
         </form>
@@ -124,34 +124,36 @@ const Auth = ({ params }: { params: { mode: string } }) => {
               onClick={() => oAuthSignIn?.("google")}
               className="w-64 bg-orange-100 block px-5 py-2 border border-black-500 rounded-md"
             >
-              Sign with google
+              구글로 로그인
             </button>
             <button
               onClick={() => oAuthSignIn?.("kakao")}
               className="w-64 bg-orange-100 mt-2 block px-5 py-2 border border-black-500 rounded-md"
             >
-              Sign with kakao
+              카카오로 로그인
             </button>
             <button
               onClick={() => {}}
               className="w-64 bg-orange-100 mt-2 block px-5 py-2 border border-black-500 rounded-md"
             >
-              Sign with apple
+              애플로 로그인
             </button>
           </div>
           <div className="flex-auto text-right align-bottom">
             <small className="block text-gray-600">
-              {isLoginMode ? "Not a member yet?" : "Already a member?"}{" "}
+              {isLoginMode
+                ? "아직 계정이 없으신가요?"
+                : "이미 계정이 있으신가요?"}{" "}
             </small>
             <a
-              className="block font-semibold"
+              className="block font-semibold text-xl"
               href=""
               onClick={(e) => {
                 e.preventDefault();
                 setisLoginMode(!isLoginMode);
               }}
             >
-              {isLoginMode ? "Sign Up" : "Log In"}
+              {isLoginMode ? "회원가입" : "로그인"}
             </a>
           </div>
         </div>

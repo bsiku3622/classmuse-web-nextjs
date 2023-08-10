@@ -5,6 +5,12 @@ import Navbar from "../components/navbar";
 import Head from "next/head";
 import { MessageProvider } from "../lib/contexts/useMessage";
 import { AuthProvider } from "@/lib/contexts/useAuth";
+import localFont from "next/font/local";
+
+const PretendardVariable = localFont({
+  preload: true,
+  src: "./fonts/PretendardVariable.woff2",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -22,7 +28,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </Head>
       <MessageProvider>
         <AuthProvider>
-          <body className={`w-full p-0`}>
+          <body className={`w-full p-0 ${PretendardVariable.className}`}>
             <Navbar />
             {children}
           </body>
