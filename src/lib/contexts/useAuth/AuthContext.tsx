@@ -103,10 +103,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error: any) {
       console.log(error);
-      handleMessage?.({
-        message: error.error_description || error,
-        type: "error",
-      });
     } finally {
       setLoading(false);
     }
