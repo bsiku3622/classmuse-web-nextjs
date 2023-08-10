@@ -1,13 +1,17 @@
 "use client";
 
+import { useAuth } from "@/lib/contexts/useAuth";
+import { authInstance } from "@/lib/supabase";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars, FaBuffer, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
+  const { signOut, loggedIn, userLoading, handleUserLoading, handleLoggedIn } =
+    useAuth();
 
-  let status = "not authenticated";
+  // let status = "not authenticated";
   return (
     //   navbar goes here
     <nav className="bg-gray-100">
@@ -60,16 +64,10 @@ const Navbar = () => {
             </div>
           </div>
           {/* secondary nav */}
-          {status === "authenticated" ? (
+          {loggedIn ? (
             <div className="hidden md:flex items-center space-x-1">
-              <button
-                className="py-5 px-3"
-                onClick={(evt) => {
-                  evt.preventDefault();
-                  alert("Log out");
-                }}
-              >
-                Log out
+              <button className="py-5 px-3" onClick={signOut}>
+                로그아웃
               </button>
             </div>
           ) : (
@@ -125,13 +123,10 @@ const Navbar = () => {
           요금제
         </Link>
 
-        {status === "authenticated" ? (
+        {loggedIn ? (
           <button
             className="block py-2 px-4 text-sm hover:bg-gray-200"
-            onClick={(evt) => {
-              evt.preventDefault();
-              alert("Log out");
-            }}
+            onClick={signOut}
           >
             로그아웃
           </button>

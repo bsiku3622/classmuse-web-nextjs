@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <Head>
-        <title>클래스뮤즈 - 홈</title>
+        <title>클래스뮤즈</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
