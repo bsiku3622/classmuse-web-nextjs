@@ -69,7 +69,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const { error } = await authInstance.signInWithPassword(payload);
       if (error) {
         console.log(error);
-        handleMessage?.({ message: error.message, type: "error" });
+        handleMessage?.({
+          message: "로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.",
+          type: "error",
+        });
       } else {
         handleMessage?.({
           message: "로그인 되었습니다.",
