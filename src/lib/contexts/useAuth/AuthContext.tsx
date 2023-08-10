@@ -5,6 +5,7 @@ import { authInstance } from "../../supabase";
 import { User, UserResponse } from "@supabase/supabase-js";
 import { useMessage } from "../useMessage";
 import { SupabaseAuthPayload } from "./auth.types";
+import { useRouter } from "next/navigation";
 
 export type AuthContextProps = {
   user: User | null | UserResponse;
@@ -22,6 +23,8 @@ export type AuthContextProps = {
 export const AuthContext = createContext<Partial<AuthContextProps>>({});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null | UserResponse>(null);
   const [userLoading, setUserLoading] = useState(true);
@@ -36,18 +39,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const { error } = await authInstance.signUp(payload);
       if (error) {
         console.log(error);
-        handleMessage?.({ message: error.message, type: "error" });
-      } else {
         handleMessage?.({
           message:
-            "Signup successful. Please check your inbox for a confirmation email!",
+            "회원가입에 실패했습니다. 이메일과 비밀번호를 다시한번 확인해주세요.",
+          type: "error",
+        });
+      } else {
+        handleMessage?.({
+          message: "회원가입에 성공했습니다.",
           type: "success",
         });
+        signIn(payload);
       }
     } catch (error: any) {
       console.log(error);
       handleMessage?.({
-        message: error.error_description || error,
+        message: "회원가입에 실패했습니다. 나중에 다시시도 바랍니다",
         type: "error",
       });
     } finally {
@@ -65,9 +72,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         handleMessage?.({ message: error.message, type: "error" });
       } else {
         handleMessage?.({
-          message: "Log in successful. I'll redirect you once I'm done",
+          message: "로그인 되었습니다.",
           type: "success",
         });
+        router.push("/home");
       }
     } catch (error: any) {
       console.log(error);
@@ -85,7 +93,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(true);
       const { error } = await authInstance.signInWithOAuth({
         provider: provider,
-        options: {},
+        options: {
+          redirectTo: "/home",
+        },
       });
       if (error) {
         console.log(error);
@@ -102,7 +112,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const signOut = async () => await authInstance.signOut();
+  const signOut = async () => {
+    try {
+      const { error } = await authInstance.signOut();
+      if (error) handleMessage?.({ message: error.message, type: "error" });
+    } catch (error: any) {
+      console.log(error);
+      handleMessage?.({
+        message: error.error_description || error,
+        type: "error",
+      });
+    }
+  };
 
   const handleLoggedIn = (isLoggedIn: boolean) => {
     setLoggedIn(isLoggedIn);
@@ -119,6 +140,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           data: { user },
         } = await authInstance.getUser();
         if (user) setLoggedIn(true);
+        if (!user) setLoggedIn(false);
         console.log(user);
         console.log("user load complete.");
         setUserLoading(false);
