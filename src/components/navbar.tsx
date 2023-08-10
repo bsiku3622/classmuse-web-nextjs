@@ -1,17 +1,14 @@
 "use client";
 
 import { useAuth } from "@/lib/contexts/useAuth";
-import { authInstance } from "@/lib/supabase";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaBars, FaBuffer, FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState(false);
-  const { signOut, loggedIn, userLoading, handleUserLoading, handleLoggedIn } =
-    useAuth();
+  const { signOut, loggedIn } = useAuth();
 
-  // let status = "not authenticated";
   return (
     //   navbar goes here
     <nav className="bg-gray-100">

@@ -1,20 +1,10 @@
-"use client";
-
 import "./globals.css";
 import type { Metadata } from "next";
 // import { Noto_Sans_KR } from "next/font/google";
 import Navbar from "../components/navbar";
 import Head from "next/head";
 import { MessageProvider } from "../lib/contexts/useMessage";
-import { AuthProvider, useAuth } from "@/lib/contexts/useAuth";
-import { useEffect } from "react";
-import { authInstance } from "@/lib/supabase";
-
-// const notoSansKR = Noto_Sans_KR({
-//   preload: true,
-//   subsets: ["latin"],
-//   weight: ["100", "300", "400", "500", "700", "900"],
-// });
+import { AuthProvider } from "@/lib/contexts/useAuth";
 
 export const metadata: Metadata = {
   title: {
