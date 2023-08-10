@@ -102,7 +102,7 @@ const Navbar = () => {
           소개 및 가이드
         </Link>
         <Link
-          href="/feture"
+          href="/feature"
           className="block py-2 px-4 text-sm hover:bg-gray-200"
         >
           주요 기능

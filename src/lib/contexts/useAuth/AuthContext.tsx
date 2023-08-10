@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const { error } = await authInstance.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: "/home",
+          redirectTo: "https://classmuse.bsiku.dev/home",
         },
       });
       if (error) {
