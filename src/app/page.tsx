@@ -2,7 +2,7 @@ import Head from "next/head";
 
 const Home = () => {
   return (
-    <div className="flex flex-col items-center justify-start py-36 min-h-screen">
+    <div className="flex flex-col items-center justify-start py-36">
       <Head>
         <title>클래스뮤즈</title>
         <link rel="icon" href="/favicon.ico" />
