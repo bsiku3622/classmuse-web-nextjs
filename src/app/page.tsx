@@ -8,8 +8,6 @@ const Home = () => {
   const router = useRouter();
   const { userLoading, loggedIn } = useAuth();
 
-  if (loggedIn) router.push("/dashboard");
-
   if (userLoading) {
     return (
       <div className="flex items-center justify-center">
@@ -17,6 +15,7 @@ const Home = () => {
       </div>
     );
   } else {
+    if (loggedIn) router.push("/dashboard");
     return (
       <div className="flex flex-col items-center justify-start py-36">
         <Head>
