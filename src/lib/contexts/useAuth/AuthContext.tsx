@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           message: "로그인 되었습니다.",
           type: "success",
         });
-        router.push("/home");
+        router.push("/");
       }
     } catch (error: any) {
       console.log(error);
@@ -96,9 +96,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setLoading(true);
       const { error } = await authInstance.signInWithOAuth({
         provider: provider,
-        options: {
-          redirectTo: "https://classmuse.bsiku.dev/home",
-        },
+        options: {},
       });
       if (error) {
         console.log(error);
@@ -140,7 +138,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         } = await authInstance.getUser();
         if (user) setLoggedIn(true);
         if (!user) setLoggedIn(false);
-        console.log(user);
         console.log("user load complete.");
         setUserLoading(false);
       });

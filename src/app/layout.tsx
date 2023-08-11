@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Navbar from "../components/navbar";
 import Head from "next/head";
 import { MessageProvider } from "../lib/contexts/useMessage";
-import { AuthProvider } from "@/lib/contexts/useAuth";
+import { AuthProvider, useAuth } from "@/lib/contexts/useAuth";
 import localFont from "next/font/local";
 
 const PretendardVariable = localFont({

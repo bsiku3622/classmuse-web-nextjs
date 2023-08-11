@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { FaLock, FaLockOpen } from "react-icons/fa";
 import classNames from "classnames";
-import { useFormFields } from "../../../lib/utils";
+import { useFormFields } from "../../../lib/utils/utils";
 import { useMessage } from "../../../lib/contexts/useMessage";
 import { useAuth } from "../../../lib/contexts/useAuth";
 
