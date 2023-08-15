@@ -28,7 +28,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </Head>
       <MessageProvider>
         <AuthProvider>
-          <body className={`w-full p-0 ${PretendardVariable.className}`}>
+          <body className={`w-screen p-0 ${PretendardVariable.className}`}>
             <Navbar />
             {children}
           </body>

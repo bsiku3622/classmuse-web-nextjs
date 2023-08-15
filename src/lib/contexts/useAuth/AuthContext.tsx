@@ -1,14 +1,14 @@
 "use client";
 
 import { createContext, useState, useEffect } from "react";
-import { authInstance } from "../../supabase";
+import { authInstance, supabaseInstance } from "../../supabase";
 import { User, UserResponse } from "@supabase/supabase-js";
 import { useMessage } from "../useMessage";
 import { SupabaseAuthPayload } from "./auth.types";
 import { useRouter } from "next/navigation";
 
 export type AuthContextProps = {
-  user: User | null | UserResponse;
+  user: User | null;
   signUp: (payload: SupabaseAuthPayload) => void;
   signIn: (payload: SupabaseAuthPayload) => void;
   oAuthSignIn: (provider: any) => void;
@@ -18,6 +18,11 @@ export type AuthContextProps = {
   handleLoggedIn: (isLoggedIn: boolean) => void;
   handleUserLoading: (isUserLoading: boolean) => void;
   userLoading: boolean;
+  hasProfile: boolean;
+  userProfile: any;
+  userProfileList: any[];
+  userProfileIndex: number;
+  // setUserProfileIndex: (index: number) => void;
 };
 
 export const AuthContext = createContext<Partial<AuthContextProps>>({});
@@ -26,9 +31,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | null | UserResponse>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [userLoading, setUserLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [hasProfile, setHasProfile] = useState(false);
+  const [userProfileList, setUserProfileList] = useState<any>([]);
+  const [userProfileIndex, setUserProfileIndex] = useState(0);
 
   const { handleMessage } = useMessage();
 
@@ -130,16 +138,38 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUserLoading(isUserLoading);
   };
 
+  let userProfile = userProfileList[userProfileIndex];
+
+  const updateUserProfile = async () => {};
+  const deleteUserProfile = async () => {};
+
   useEffect(() => {
     const checkLoggedIn = async () => {
       await authInstance.onAuthStateChange(async (event, session) => {
         const {
           data: { user },
         } = await authInstance.getUser();
-        if (user) setLoggedIn(true);
-        if (!user) setLoggedIn(false);
-        console.log("user load complete.");
-        setUserLoading(false);
+        if (user) {
+          setUser(user);
+          const { data, error, status, statusText } = await supabaseInstance
+            .from("user_profiles")
+            .select()
+            .eq("useruid", user.id);
+          setLoggedIn(true);
+          if (data) {
+            setUserProfileList(data);
+            setHasProfile(true);
+          } else {
+            setHasProfile(false);
+          }
+          setUserLoading(false);
+          console.log("user load complete.");
+        }
+        if (!user) {
+          setLoggedIn(false);
+          console.log("user load complete.");
+          setUserLoading(false);
+        }
       });
     };
     checkLoggedIn();
@@ -158,6 +188,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         handleLoggedIn,
         userLoading,
         handleUserLoading,
+        hasProfile,
+        userProfile,
+        userProfileList,
+        userProfileIndex,
       }}
     >
       {children}
