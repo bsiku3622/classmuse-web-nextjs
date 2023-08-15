@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Profile = () => {
+const NewProfilePrimary = () => {
   return (
     <div className="flex">
       <h1 className="text-6xl font-bold"></h1>
@@ -8,4 +8,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default NewProfilePrimary;

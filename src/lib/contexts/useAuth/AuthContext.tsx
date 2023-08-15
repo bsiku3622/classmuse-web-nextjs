@@ -172,8 +172,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       });
     };
-    checkLoggedIn();
-  }, []);
+    if (userLoading) checkLoggedIn();
+  });
 
   return (
     <AuthContext.Provider
