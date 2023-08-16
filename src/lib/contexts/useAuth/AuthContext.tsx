@@ -4,8 +4,12 @@ import { createContext, useState, useEffect } from "react";
 import { authInstance, supabaseInstance } from "../../supabase";
 import { User, UserResponse } from "@supabase/supabase-js";
 import { useMessage } from "../useMessage";
-import { SupabaseAuthPayload } from "./auth.types";
 import { useRouter } from "next/navigation";
+
+export type SupabaseAuthPayload = {
+  email: string;
+  password: string;
+};
 
 export type AuthContextProps = {
   user: User | null;

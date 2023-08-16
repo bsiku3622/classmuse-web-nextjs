@@ -6,6 +6,7 @@ import classNames from "classnames";
 import { useFormFields } from "../../../lib/utils/utils";
 import { useMessage } from "../../../lib/contexts/useMessage";
 import { useAuth } from "../../../lib/contexts/useAuth";
+import { useRouter } from "next/navigation";
 
 type FormFieldProps = {
   email: string;
@@ -28,7 +29,10 @@ const Auth = ({ params }: { params: { mode: string } }) => {
   }, []);
   const [isLoginMode, setisLoginMode] = useState(true);
 
-  const { loading, signIn, signUp, oAuthSignIn } = useAuth();
+  const router = useRouter();
+
+  const { loggedIn, userLoading, loading, signIn, signUp, oAuthSignIn } =
+    useAuth();
   const { messages } = useMessage();
 
   const [values, handleChange, resetFormFields] =

@@ -1,7 +1,13 @@
 "use client";
 
 import { createContext, useState } from "react";
-import { MessageProps } from "./message.types";
+
+export type MessageType = "default" | "success" | "error";
+
+export type MessageProps = {
+  type: MessageType;
+  message: string;
+};
 
 export type MessageContextProps = {
   messages: MessageProps[];

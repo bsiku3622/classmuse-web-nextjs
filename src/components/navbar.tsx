@@ -166,7 +166,7 @@ const Navbar = () => {
                   )}
                 </button>
               </nav>
-              <div className="py-6">
+              <div className="py-2">
                 <Link
                   href="/dashboard"
                   onClick={() => setMenuToggle(false)}
@@ -275,6 +275,171 @@ const Navbar = () => {
     }
   } else if (pathname.startsWith("/auth") && !userLoading && loggedIn) {
     router.push("/");
+  } else if (pathname.startsWith("/account")) {
+    return (
+      <>
+        <nav
+          className={`lg:flex hidden h-16 border-b border-gray-200 px-12 items-center`}
+        >
+          {/* logo */}
+          <div className="flex-auto">
+            <Link href="/" className="flex items-center text-gray-700">
+              <FaBuffer className="w-6 h-6" />
+              <span className="font-bold ps-6 pe-4 text-lg font-medium">
+                클래스뮤즈
+              </span>
+            </Link>
+          </div>
+
+          {/* primary nav */}
+          <div className="flex-end ms-6">
+            <Link
+              href="/"
+              className={`px-5 ${
+                pathname == "/" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700`}
+            >
+              홈
+            </Link>
+            <Link
+              href="/introduction"
+              className={`px-5 ${
+                pathname == "/introduction" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700`}
+            >
+              소개 및 가이드
+            </Link>
+            <Link
+              href="/feature"
+              className={`px-5 ${
+                pathname == "/feature" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700`}
+            >
+              주요 기능
+            </Link>
+            <Link
+              href="/blog"
+              className={`px-5 ${
+                pathname == "/blog" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700`}
+            >
+              블로그
+            </Link>
+            <Link
+              href="/price"
+              className={`px-5 ${
+                pathname == "/price" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700`}
+            >
+              요금제
+            </Link>
+          </div>
+        </nav>
+        {/* mobile */}
+        <nav
+          className={`${
+            menuToggle ? "hidden" : "block"
+          } lg:hidden flex h-16 border-b border-gray-200 px-4 items-center`}
+        >
+          {/* logo */}
+          <div className="flex-auto">
+            <Link href="/" className="flex items-center text-gray-700">
+              <FaBuffer className="w-6 h-6" />
+              <span className="font-bold ps-4 pe-4 text-lg font-medium">
+                클래스뮤즈
+              </span>
+            </Link>
+          </div>
+
+          {/* mobile menu */}
+          <button onClick={() => setMenuToggle(!menuToggle)}>
+            {menuToggle ? (
+              <FaTimes className="w-6 h-6" />
+            ) : (
+              <FaBars className="w-6 h-6" />
+            )}
+          </button>
+        </nav>
+        {/* mobile menu */}
+        <div
+          className={`${
+            menuToggle ? "block" : "hidden"
+          } absolute inset-0 bg-white flex flex-col align-center`}
+        >
+          <nav className=" flex h-16 border-b border-gray-200 px-4 items-center block">
+            {/* logo */}
+            <div className="flex-auto">
+              <Link
+                href="/"
+                className="flex items-center text-gray-700"
+                onClick={() => setMenuToggle(false)}
+              >
+                <FaBuffer className="w-6 h-6" />
+                <span className="font-bold ps-4 pe-4 text-lg font-medium">
+                  클래스뮤즈
+                </span>
+              </Link>
+            </div>
+
+            {/* mobile menu */}
+            <button onClick={() => setMenuToggle(!menuToggle)}>
+              {menuToggle ? (
+                <FaTimes className="w-6 h-6" />
+              ) : (
+                <FaBars className="w-6 h-6" />
+              )}
+            </button>
+          </nav>
+          <div className="py-2">
+            <Link
+              href="/"
+              className={`px-5 ${
+                pathname == "/" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700 block py-5 px-6`}
+              onClick={() => setMenuToggle(false)}
+            >
+              홈
+            </Link>
+            <Link
+              href="/introduction"
+              className={`px-5 ${
+                pathname == "/introduction" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700 block py-5 px-6`}
+              onClick={() => setMenuToggle(false)}
+            >
+              소개 및 가이드
+            </Link>
+            <Link
+              href="/feature"
+              className={`px-5 ${
+                pathname == "/feature" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700 block py-5 px-6`}
+              onClick={() => setMenuToggle(false)}
+            >
+              주요 기능
+            </Link>
+            <Link
+              href="/blog"
+              className={`px-5 ${
+                pathname == "/blog" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700 block py-5 px-6`}
+              onClick={() => setMenuToggle(false)}
+            >
+              블로그
+            </Link>
+            <Link
+              href="/price"
+              className={`px-5 ${
+                pathname == "/price" ? "text-gray-700" : "text-gray-400"
+              } hover:text-gray-700 block py-5 px-6`}
+              onClick={() => setMenuToggle(false)}
+            >
+              요금제
+            </Link>
+          </div>
+        </div>
+      </>
+    );
   } else {
     return (
       //   navbar goes here
@@ -437,7 +602,7 @@ const Navbar = () => {
               )}
             </button>
           </nav>
-          <div>
+          <div className="py-2">
             <Link
               href="/"
               className={`px-5 ${
@@ -519,7 +684,7 @@ const Navbar = () => {
                   <PiCaretRightLight className="flex-end w-6 h-6" />
                 </Link>
               ) : (
-                <div>
+                <div className="space-y-2">
                   <Link
                     onClick={() => setMenuToggle(false)}
                     href="/auth/login"
@@ -540,11 +705,13 @@ const Navbar = () => {
               )}
               <p className="text-center">
                 <span>
-                  <Link href="#"> v.{process.env.NEXT_PUBLIC_APP_VERSION}</Link>
+                  <Link href={`/info/version/catalog/`}>
+                    V.{process.env.NEXT_PUBLIC_APP_VERSION}
+                  </Link>
                 </span>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <span>
-                  <Link href="#">문의하기</Link>
+                  <Link href="/help/ask">문의하기</Link>
                 </span>
                 {loggedIn ? (
                   <>
