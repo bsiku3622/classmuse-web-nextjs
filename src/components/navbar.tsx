@@ -247,10 +247,12 @@ const Navbar = () => {
                 </Link>
                 <div className="flex flex-col justify-center py-8 px-6 absolute w-screen bottom-0 space-y-3">
                   <p
-                    onClick={() => setMenuToggle(false)}
+                    onClick={() => {
+                      setMenuToggle(false);
+                      signOut?.();
+                    }}
                     className="h-14 text-xl px-3 py-3 flex-1 flex justify-center items-center bg-red-500 border-2 border-gray-200 hover:bg-red-200 text-slate-100 hover:text-slate-900 rounded-md transition duration-300"
                   >
-                    {" "}
                     로그아웃
                   </p>
 
