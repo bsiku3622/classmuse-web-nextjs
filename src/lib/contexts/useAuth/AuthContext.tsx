@@ -12,20 +12,24 @@ export type SupabaseAuthPayload = {
 };
 
 export type AuthContextProps = {
-  user: User | null;
-  signUp: (payload: SupabaseAuthPayload) => void;
-  signIn: (payload: SupabaseAuthPayload) => void;
-  oAuthSignIn: (provider: any) => void;
-  signOut: () => void;
-  loading: boolean;
+  // user status values
   loggedIn: boolean;
-  handleLoggedIn: (isLoggedIn: boolean) => void;
-  handleUserLoading: (isUserLoading: boolean) => void;
-  userLoading: boolean;
+  preLoggedIn: boolean;
   hasProfile: boolean;
-  userProfile: any;
+  userLoading: boolean;
+  // loading status value when signup
+  signUpLoading: boolean;
+
+  user: User | null;
   userProfileList: any[];
   userProfileIndex: number;
+  userProfile: any;
+
+  emailSignUp: (payload: SupabaseAuthPayload) => void;
+  emailSignIn: (payload: SupabaseAuthPayload) => void;
+  oAuthSignIn: (provider: any) => void;
+  signOut: () => void;
+
   // setUserProfileIndex: (index: number) => void;
 };
 
@@ -33,21 +37,24 @@ export const AuthContext = createContext<Partial<AuthContextProps>>({});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-
-  const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-  const [userLoading, setUserLoading] = useState(true);
+  const { handleMessage } = useMessage();
+  // user status values
   const [loggedIn, setLoggedIn] = useState(false);
+  const [preLoggedIn, setPreLoggedIn] = useState(false);
   const [hasProfile, setHasProfile] = useState(false);
+  const [userLoading, setUserLoading] = useState(true);
+  // loading status value when signup
+  const [signUpLoading, setSignUpLoading] = useState(false);
+  // user instances
+  const [user, setUser] = useState<User | null>(null);
   const [userProfileList, setUserProfileList] = useState<any>([]);
   const [userProfileIndex, setUserProfileIndex] = useState(0);
+  let userProfile = userProfileList[userProfileIndex];
 
-  const { handleMessage } = useMessage();
-
-  // sign-up a user with provided details
-  const signUp = async (payload: SupabaseAuthPayload) => {
+  // auth functions
+  const emailSignUp = async (payload: SupabaseAuthPayload) => {
     try {
-      setLoading(true);
+      setSignUpLoading(true);
       const { error } = await authInstance.signUp(payload);
       if (error) {
         console.log(error);
@@ -61,7 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           message: "회원가입에 성공했습니다.",
           type: "success",
         });
-        signIn(payload);
+        router.replace("/auth/signup/select_role");
       }
     } catch (error: any) {
       console.log(error);
@@ -70,14 +77,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         type: "error",
       });
     } finally {
-      setLoading(false);
+      setSignUpLoading(false);
     }
   };
 
-  // sign-in a user with provided details
-  const signIn = async (payload: SupabaseAuthPayload) => {
+  const emailSignIn = async (payload: SupabaseAuthPayload) => {
     try {
-      setLoading(true);
+      setSignUpLoading(true);
       const { error } = await authInstance.signInWithPassword(payload);
       if (error) {
         console.log(error);
@@ -99,13 +105,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         type: "error",
       });
     } finally {
-      setLoading(false);
+      setSignUpLoading(false);
     }
   };
 
   const oAuthSignIn = async (provider: any) => {
     try {
-      setLoading(true);
+      setSignUpLoading(true);
       const { error } = await authInstance.signInWithOAuth({
         provider: provider,
         options: {},
@@ -117,7 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       console.log(error);
     } finally {
-      setLoading(false);
+      setSignUpLoading(false);
     }
   };
 
@@ -134,19 +140,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const handleLoggedIn = (isLoggedIn: boolean) => {
-    setLoggedIn(isLoggedIn);
-  };
-
-  const handleUserLoading = (isUserLoading: boolean) => {
-    setUserLoading(isUserLoading);
-  };
-
-  let userProfile = userProfileList[userProfileIndex];
-
-  const updateUserProfile = async () => {};
-  const deleteUserProfile = async () => {};
-
   useEffect(() => {
     const checkLoggedIn = async () => {
       await authInstance.onAuthStateChange(async (event, session) => {
@@ -159,20 +152,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             .from("user_profiles")
             .select()
             .eq("useruid", user.id);
-          setLoggedIn(true);
-          if (data) {
+          if (data && data.length != 0) {
             setUserProfileList(data);
+            setLoggedIn(true);
             setHasProfile(true);
+            setPreLoggedIn(false);
           } else {
+            setLoggedIn(false);
             setHasProfile(false);
+            setPreLoggedIn(true);
           }
           setUserLoading(false);
           console.log("user load complete.");
         }
         if (!user) {
           setLoggedIn(false);
-          console.log("user load complete.");
+          setHasProfile(false);
+          setPreLoggedIn(false);
           setUserLoading(false);
+          console.log("user load complete.");
         }
       });
     };
@@ -182,20 +180,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
-        user,
-        signUp,
-        signIn,
-        oAuthSignIn,
-        signOut,
-        loading,
+        // user status values
         loggedIn,
-        handleLoggedIn,
-        userLoading,
-        handleUserLoading,
+        preLoggedIn,
         hasProfile,
-        userProfile,
+        userLoading,
+        // loading status value when signup
+        signUpLoading,
+        // user instances
+        user,
         userProfileList,
         userProfileIndex,
+        userProfile,
+        // auth functions
+        emailSignUp,
+        emailSignIn,
+        oAuthSignIn,
+        signOut,
       }}
     >
       {children}

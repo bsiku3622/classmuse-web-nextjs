@@ -6,6 +6,7 @@ import Head from "next/head";
 import { MessageProvider } from "../lib/contexts/useMessage";
 import { AuthProvider, useAuth } from "@/lib/contexts/useAuth";
 import localFont from "next/font/local";
+import MessageContainer from "@/components/message";
 
 const PretendardVariable = localFont({
   preload: true,
@@ -28,9 +29,10 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </Head>
       <MessageProvider>
         <AuthProvider>
-          <body className={`w-screen p-0 ${PretendardVariable.className}`}>
+          <body className={`w-screen ${PretendardVariable.className}`}>
             <Navbar />
-            {children}
+            <main className="mx-4">{children}</main>
+            <MessageContainer />
           </body>
         </AuthProvider>
       </MessageProvider>

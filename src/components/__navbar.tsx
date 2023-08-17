@@ -540,7 +540,7 @@ const Navbar = () => {
               </Link>
               <Link
                 href="/auth/signup"
-                className="ms-2 h-10 px-3 flex items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-slate-200 hover:text-slate-900 rounded-md transition duration-300"
+                className="ms-2 h-10 px-3 flex items-center bg-gradient-to-r from-indigo-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-slate-200 hover:text-slate-900 rounded-md transition duration-300"
               >
                 회원가입
               </Link>
@@ -697,7 +697,7 @@ const Navbar = () => {
                   <Link
                     onClick={() => setMenuToggle(false)}
                     href="/auth/signup"
-                    className="h-14 text-xl px-3 py-3 flex-1 flex justify-center items-center bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-slate-200 hover:text-slate-900 rounded-md transition duration-300"
+                    className="h-14 text-xl px-3 py-3 flex-1 flex justify-center items-center bg-gradient-to-r from-indigo-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-slate-200 hover:text-slate-900 rounded-md transition duration-300"
                   >
                     회원가입
                   </Link>

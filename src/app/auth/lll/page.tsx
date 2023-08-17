@@ -31,8 +31,7 @@ const Auth = ({ params }: { params: { mode: string } }) => {
 
   const router = useRouter();
 
-  const { loggedIn, userLoading, loading, signIn, signUp, oAuthSignIn } =
-    useAuth();
+  const { loading, signIn, signUp, oAuthSignIn } = useAuth();
   const { messages } = useMessage();
 
   const [values, handleChange, resetFormFields] =
