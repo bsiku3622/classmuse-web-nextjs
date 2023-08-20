@@ -13,16 +13,16 @@ import AuthNavbar from "./authNavbar";
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const { userLoading } = useAuth();
+  const { userLoading, loggedIn } = useAuth();
   const { handleMessage } = useMessage();
 
-  if (userLoading) {
-    return <PrimaryNavbar />;
-  } else {
+  if (!userLoading) {
     if (pathname.startsWith("/auth")) {
       return <AuthNavbar />;
+    } else if (pathname.startsWith("/dashboard")) {
+      return <DashboardNavbar />;
     } else {
-      return <PrimaryNavbar />;
+      return loggedIn ? <SignedPrimaryNavbar /> : <PrimaryNavbar />;
     }
   }
 };

@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { FaLock } from "react-icons/fa";
-import { MdMail } from "react-icons/md";
 import { useMessage } from "../../../lib/contexts/useMessage";
 import { useAuth } from "../../../lib/contexts/useAuth";
 import Link from "next/link";

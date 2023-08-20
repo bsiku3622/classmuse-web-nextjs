@@ -20,8 +20,6 @@ const FORM_VALUES: FormFieldProps = {
 };
 
 const Signup = ({ params }: { params: { mode: string } }) => {
-  const router = useRouter();
-
   const { signUpLoading, emailSignUp } = useAuth();
   const { handleMessage } = useMessage();
 

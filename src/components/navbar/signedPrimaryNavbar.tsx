@@ -81,12 +81,12 @@ const SignedPrimaryNavbar = () => {
           className="ms-10 items-center justify-center flex"
         >
           <span className="text-gray-500 hover:text-gray-900">
-            만나서 반갑습니다. {userProfile.username}님
+            만나서 반갑습니다. {userProfile?.username}님
           </span>
           <div className="h-12 ms-2 px-1.5 pe-2 hover:bg-gray-100 rounded-l-full rounded-r-full items-center justify-center flex">
-            {userProfile.profile_image ? (
+            {userProfile?.profile_image ? (
               <Image
-                src={userProfile.profile_image}
+                src={userProfile?.profile_image}
                 alt="bsiku"
                 width={36}
                 height={36}
@@ -95,7 +95,7 @@ const SignedPrimaryNavbar = () => {
             ) : (
               <div className="block w-9 h-9 bg-gray-700 hover:bg-gray-500 object-fit:cover rounded-full flex items-center justify-center">
                 <p className="text-gray-100 font-semibold">
-                  {userProfile.username.substring(0, 1)}
+                  {userProfile?.username.substring(0, 1)}
                 </p>
               </div>
             )}
@@ -212,10 +212,10 @@ const SignedPrimaryNavbar = () => {
             >
               {/* user profile image */}
               <div className="flex-none flex h-12 w-12 px-1.5 hover:bg-gray-100 rounded-full items-center justify-center">
-                {userProfile.profile_image ? (
+                {userProfile?.profile_image ? (
                   <Image
-                    src={userProfile.profile_image}
-                    alt={userProfile.username}
+                    src={userProfile?.profile_image}
+                    alt={userProfile?.username}
                     width={36}
                     height={36}
                     className="flex-none block w-9 h-9 object-fit:cover rounded-full"
@@ -223,14 +223,14 @@ const SignedPrimaryNavbar = () => {
                 ) : (
                   <div className="block w-9 h-9 bg-gray-700 hover:bg-gray-500 object-fit:cover rounded-full flex items-center justify-center">
                     <p className="text-gray-100 font-semibold">
-                      {userProfile.username.substring(0, 1)}
+                      {userProfile?.username.substring(0, 1)}
                     </p>
                   </div>
                 )}
               </div>
               <div className="flex-1 ms-3 max-w-[16rem] flex flex-col">
                 <p className="break-words text-slate-600 hover:text-slate-900 text-lg text-end">
-                  만나서 반가워요, {userProfile.username}님!
+                  만나서 반가워요, {userProfile?.username}님!
                 </p>
                 <p className="text-slate-500 hover:text-slate-700 text-md text-end">
                   대쉬보드로 이동

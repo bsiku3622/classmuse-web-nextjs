@@ -2,11 +2,15 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "로그인",
+  title: "학생 계정 만들기",
 };
 
 // this is server component. you could use `metadata` as well
-const LoginLayout = ({ children }: { children: React.ReactNode }) => {
+const SignupNewAccountStudentLayout = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   return (
     <div>
       {/* <title>Login to my app</title> */}
@@ -15,4 +19,4 @@ const LoginLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default LoginLayout;
+export default SignupNewAccountStudentLayout;

@@ -22,7 +22,7 @@ const FORM_VALUES: FormFieldProps = {
 const Signup = ({ params }: { params: { mode: string } }) => {
   const router = useRouter();
 
-  const { signUpLoading, emailSignUp } = useAuth();
+  const { signUpLoading, emailSignIn } = useAuth();
   const { handleMessage } = useMessage();
 
   const [values, handleChange, resetFormFields] =
@@ -31,8 +31,7 @@ const Signup = ({ params }: { params: { mode: string } }) => {
   // Form submit handler to call the above function
   const handleSumbit = (event: React.FormEvent) => {
     event.preventDefault();
-    emailSignUp?.(values);
-    resetFormFields();
+    emailSignIn?.(values);
   };
   return (
     // eslint-disable-next-line react/jsx-key
@@ -41,7 +40,7 @@ const Signup = ({ params }: { params: { mode: string } }) => {
         <FaLock className="w-6 h-6" />
 
         <h1 className="text-2xl mt-2 md:text-4xl text-gray-700 font-bold">
-          정보입력
+          이메일로 로그인
         </h1>
       </div>
       <div className="flex-col">
@@ -87,12 +86,12 @@ const Signup = ({ params }: { params: { mode: string } }) => {
               className="bg-indigo-500 hover:bg-blue-700 text-white font-semibold py-3 w-full rounded-md focus:outline-none focus:shadow-outline"
               type="submit"
             >
-              {!signUpLoading ? "회원가입" : "처리중 ..."}
+              {!signUpLoading ? "로그인" : "처리중 ..."}
             </button>
           </form>
           <hr className="border" />
           <p className="flex-auto text-center">
-            <Link href="/auth/signup">돌아가기</Link>
+            <Link href="/auth/login">돌아가기</Link>
           </p>
         </div>
       </div>

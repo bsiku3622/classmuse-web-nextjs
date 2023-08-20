@@ -11,6 +11,12 @@ export type SupabaseAuthPayload = {
   password: string;
 };
 
+export type SupabaseProfilePayload = {
+  handle: string;
+  username: string;
+  birthday: string;
+};
+
 export type AuthContextProps = {
   // user status values
   loggedIn: boolean;
@@ -29,6 +35,9 @@ export type AuthContextProps = {
   emailSignIn: (payload: SupabaseAuthPayload) => void;
   oAuthSignIn: (provider: any) => void;
   signOut: () => void;
+
+  // user profiles
+  createPrimaryProfile: (payload: SupabaseProfilePayload) => void;
 
   // setUserProfileIndex: (index: number) => void;
 };
@@ -68,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           message: "회원가입에 성공했습니다.",
           type: "success",
         });
-        router.replace("/auth/signup/select_role");
+        router.push("/auth/signup/new_profile/select_role");
       }
     } catch (error: any) {
       console.log(error);
@@ -96,7 +105,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           message: "로그인 되었습니다.",
           type: "success",
         });
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (error: any) {
       console.log(error);
@@ -135,6 +144,44 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log(error);
       handleMessage?.({
         message: error.error_description || error,
+        type: "error",
+      });
+    }
+  };
+
+  const createPrimaryProfile = async (payload: SupabaseProfilePayload) => {
+    try {
+      console.log({
+        useruid: user?.id,
+        handle: payload.handle,
+        username: payload.username,
+        birthday: payload.birthday,
+      });
+      const { error } = await supabaseInstance.from("user_profiles").insert({
+        useruid: user?.id,
+        handle: payload.handle,
+        username: payload.username,
+        birthday: payload.birthday,
+        is_primary_profile: true,
+      });
+      if (error) {
+        handleMessage?.({
+          message: "에러가 발생했습니다. 핸들명을 확인해주세요!",
+          type: "error",
+        });
+        console.log(error);
+      } else {
+        handleMessage?.({
+          message: "프로필이 생성되었습니다",
+          type: "success",
+        });
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      console.log(error);
+      handleMessage?.({
+        message:
+          "에러가 발생했습니다. 서버상 오류로, 나중에 다시 시도 바랍니다. 불편을 끼쳐드려 죄송합니다 ㅠ",
         type: "error",
       });
     }
@@ -193,6 +240,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         emailSignIn,
         oAuthSignIn,
         signOut,
+        // user profiles functions
+        createPrimaryProfile,
       }}
     >
       {children}

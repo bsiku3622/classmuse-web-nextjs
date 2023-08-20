@@ -1,19 +1,40 @@
 "use client";
 
-import { useAuth } from "@/lib/contexts/useAuth";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
 import { FaBars, FaBuffer, FaTimes } from "react-icons/fa";
 import { TfiSearch } from "react-icons/tfi";
 import { PiBellLight, PiCaretRightLight } from "react-icons/pi";
 import { AiFillCaretDown } from "react-icons/ai";
-import { usePathname } from "next/navigation";
+
+import { useAuth } from "@/lib/contexts/useAuth";
+import { useMessage } from "@/lib/contexts/useMessage";
 
 const DashboardNavbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [menuToggle, setMenuToggle] = useState(false);
-  const { userProfile } = useAuth();
+  const { handleMessage } = useMessage();
+  const { userLoading, loggedIn, hasProfile, userProfile } = useAuth();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      handleMessage?.({
+        type: "default",
+        message: "로그인 후에 사용할 수 있습니다. 로그인해주세요.",
+      });
+      router.push("/");
+    } else if (!hasProfile) {
+      handleMessage?.({
+        type: "default",
+        message: "아직 프로필이 존재하지 않습니다.",
+      });
+      router.push("/auth/signup/new_profile/select_role");
+    }
+  }, [userLoading]);
 
   return (
     <>
@@ -80,9 +101,9 @@ const DashboardNavbar = () => {
             onClick={() => {}}
             className="ps-1.5 pe-2 h-12 hover:bg-gray-100 rounded-full items-center justify-center flex"
           >
-            {userProfile.profile_image ? (
+            {userProfile?.profile_image ? (
               <Image
-                src={userProfile.profile_image}
+                src={userProfile?.profile_image}
                 alt="프로필 사진"
                 width={36}
                 height={36}
@@ -91,7 +112,7 @@ const DashboardNavbar = () => {
             ) : (
               <div className="block w-9 h-9 bg-gray-700 object-fit:cover rounded-full flex items-center justify-center">
                 <p className="text-gray-100 font-semibold">
-                  {userProfile.username.substring(0, 1)}
+                  {userProfile?.username.substring(0, 1)}
                 </p>
               </div>
             )}
@@ -162,10 +183,10 @@ const DashboardNavbar = () => {
           >
             {/* user profile image */}
             <div className="flex-none flex h-12 w-12 px-1.5 hover:bg-gray-100 rounded-full items-center justify-center">
-              {userProfile.profile_image ? (
+              {userProfile?.profile_image ? (
                 <Image
-                  src={userProfile.profile_image}
-                  alt={userProfile.username}
+                  src={userProfile?.profile_image}
+                  alt={userProfile?.username}
                   width={36}
                   height={36}
                   className="flex-none block w-9 h-9 object-fit:cover rounded-full"
@@ -173,14 +194,14 @@ const DashboardNavbar = () => {
               ) : (
                 <div className="block w-9 h-9 bg-gray-700 hover:bg-gray-500 object-fit:cover rounded-full flex items-center justify-center">
                   <p className="text-gray-100 font-semibold">
-                    {userProfile.username.substring(0, 1)}
+                    {userProfile?.username.substring(0, 1)}
                   </p>
                 </div>
               )}
             </div>
             <div className="flex-1 ms-3 max-w-[16rem] flex flex-col">
               <p className="break-words text-slate-600 hover:text-slate-900 text-lg text-start">
-                {userProfile.username}
+                {userProfile?.username}
               </p>
               <p className="text-slate-500 hover:text-slate-700 text-md text-start">
                 내 프로필 보기
