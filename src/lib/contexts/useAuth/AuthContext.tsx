@@ -14,7 +14,7 @@ export type SupabaseAuthPayload = {
 export type AuthContextProps = {
   // user status values
   loggedIn: boolean;
-  preLoggedIn: boolean;
+  // preLoggedIn: boolean;
   hasProfile: boolean;
   userLoading: boolean;
   // loading status value when signup
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { handleMessage } = useMessage();
   // user status values
   const [loggedIn, setLoggedIn] = useState(false);
-  const [preLoggedIn, setPreLoggedIn] = useState(false);
+  // const [preLoggedIn, setPreLoggedIn] = useState(false);
   const [hasProfile, setHasProfile] = useState(false);
   const [userLoading, setUserLoading] = useState(true);
   // loading status value when signup
@@ -152,27 +152,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             .from("user_profiles")
             .select()
             .eq("useruid", user.id);
+          setLoggedIn(true);
           if (data && data.length != 0) {
             setUserProfileList(data);
-            setLoggedIn(true);
             setHasProfile(true);
-            setPreLoggedIn(false);
           } else {
-            setLoggedIn(false);
+            setUserProfileList([]);
             setHasProfile(false);
-            setPreLoggedIn(true);
           }
-          setUserLoading(false);
-          console.log("user load complete.");
         }
         if (!user) {
           setLoggedIn(false);
+          setUserProfileList([]);
           setHasProfile(false);
-          setPreLoggedIn(false);
-          setUserLoading(false);
-          console.log("user load complete.");
         }
       });
+      setUserLoading(false);
+      console.log("user load complete.");
     };
     if (userLoading) checkLoggedIn();
   });
@@ -182,7 +178,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         // user status values
         loggedIn,
-        preLoggedIn,
+        // preLoggedIn,
         hasProfile,
         userLoading,
         // loading status value when signup

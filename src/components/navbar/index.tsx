@@ -8,57 +8,21 @@ import { useMessage } from "@/lib/contexts/useMessage";
 import DashboardNavbar from "./dashboardNavbar";
 import PrimaryNavbar from "./primaryNavbar";
 import SignedPrimaryNavbar from "./signedPrimaryNavbar";
+import AuthNavbar from "./authNavbar";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const { loggedIn, hasProfile, userLoading, preLoggedIn } = useAuth();
-  const { handleMessage } = useMessage();
   const router = useRouter();
+  const { userLoading } = useAuth();
+  const { handleMessage } = useMessage();
 
-  if (!userLoading) {
-    if (pathname.startsWith("/dashboard")) {
-      if (!loggedIn) {
-        router.replace("/");
-        handleMessage?.({
-          type: "error",
-          message: "대쉬보드에 접속하려면 로그인하세요.",
-        });
-      } else if (preLoggedIn) {
-        router.replace("/auth/signup/select_role");
-        handleMessage?.({
-          type: "default",
-          message: "아직 계정에 프로필이 존재하지 않습니다.",
-        });
-        console.log("hi");
-      } else {
-        return <DashboardNavbar />;
-      }
-    } else if (
-      pathname.startsWith("/auth") &&
-      pathname != "/auth/signup/select_role"
-    ) {
-      if (loggedIn) {
-        router.replace("/");
-        handleMessage?.({
-          type: "error",
-          message: "이미 로그인 되었습니다.",
-        });
-      } else if (preLoggedIn) {
-        router.replace("/auth/signup/select_role");
-        handleMessage?.({
-          type: "default",
-          message: "아직 계정에 프로필이 존재하지 않습니다.",
-        });
-        console.log(pathname);
-      } else {
-        return null;
-      }
+  if (userLoading) {
+    return <PrimaryNavbar />;
+  } else {
+    if (pathname.startsWith("/auth")) {
+      return <AuthNavbar />;
     } else {
-      if (loggedIn) {
-        return <SignedPrimaryNavbar />;
-      } else {
-        return <PrimaryNavbar />;
-      }
+      return <PrimaryNavbar />;
     }
   }
 };
