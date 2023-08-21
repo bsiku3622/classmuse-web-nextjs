@@ -123,7 +123,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSignUpLoading(true);
       const { error } = await authInstance.signInWithOAuth({
         provider: provider,
-        options: {},
+        options: {
+          redirectTo: "/dashboard",
+        },
       });
       if (error) {
         console.log(error);
