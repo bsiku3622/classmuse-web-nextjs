@@ -89,5 +89,5 @@
 
 ## 방문하기
 
-- [stable version](https"//classmuse.bsiku.dev)
-- [test version](https"//test.classmuse.bsiku.dev)
+- [stable version](https://classmuse.bsiku.dev)
+- [test version](https://test.classmuse.bsiku.dev)
