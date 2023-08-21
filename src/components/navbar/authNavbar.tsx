@@ -2,29 +2,19 @@
 
 import { useAuth } from "@/lib/contexts/useAuth";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { FaBuffer } from "react-icons/fa";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMessage } from "@/lib/contexts/useMessage";
 
 const AuthNavbar = () => {
-  const pathname = usePathname();
   const router = useRouter();
-  const { userLoading, loggedIn, hasProfile, user } = useAuth();
+  const { userLoading, loggedIn, hasProfile } = useAuth();
   const { handleMessage } = useMessage();
 
   useEffect(() => {
-    console.log(loggedIn);
     if (loggedIn) {
-      if (!hasProfile) {
-        handleMessage?.({
-          type: "default",
-          message: "아직 프로필이 존재하지 않습니다.",
-        });
-        if (!pathname.startsWith("/auth/signup/new_profile")) {
-          router.push("/auth/signup/new_profile/select_role");
-        }
-      } else {
+      if (hasProfile) {
         handleMessage?.({ type: "error", message: "이미 로그인되었습니다." });
         router.push("/");
       }

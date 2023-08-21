@@ -1,14 +1,9 @@
 "use client";
 
-import { useAuth } from "@/lib/contexts/useAuth";
 import Link from "next/link";
-import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars, FaBuffer, FaTimes } from "react-icons/fa";
-import { PiCaretRightLight } from "react-icons/pi";
-import { AiFillCaretDown } from "react-icons/ai";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
 
 const PrimaryNavbar = () => {
   const pathname = usePathname();

@@ -81,9 +81,10 @@
 
 ## 버전 목록
 
-| Type  | Version         | Detail                      | Uploaded     | Code                                     |
-| :---: | :-------------- | :-------------------------- | :----------- | ---------------------------------------- |
-| Alpha | V.1.0.0-alpha.1 | Add Account and Signup Page | Oct 19, 2023 | 9465591f4383500075c8653f746cc5755e7c31ef |
+| Type  | Version         | Detail                      | Uploaded     |
+| :---: | :-------------- | :-------------------------- | :----------- |
+| Alpha | V.1.0.0-alpha.1 | Add Account and Signup Page | Oct 19, 2023 |
+| Alpha | V.1.0.0-alpha.2 | Add Upgraded Routing System | Oct 22, 2023 |
 
 <br />
 
