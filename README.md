@@ -1,34 +1,93 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 클래스뮤즈에 오신것을 환영합니다.
 
-## Getting Started
+<br />
 
-First, run the development server:
+## 소개
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+안녕하세요. 지쿠(SIKU)입니다. BN의 첫 프로젝트인 클래스뮤즈 깃허브 페이지에 오신것을 환영합니다!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+클래스뮤즈는 개발 진행 초기라 컨텐츠는 아직 없지만, 곧 풍성한 콘텐츠와 베타버전으로 만나볼 수 있기를 기대하고 있습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+<br />
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 무슨 서비스인가요?
 
-## Learn More
+클래스뮤즈는 학교, 학원 뿐만 아니라 다양한 온라인 클래스 선생님들과 다양한 분야를 학습하는 학생들의 만남의 장입니다.
 
-To learn more about Next.js, take a look at the following resources:
+기존의 여러 교육용 서비스들과는 다르게, 교육용 서비스와 SNS가 합쳐진 형태입니다.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+이로써, 유저들은 클래스뮤즈를 사용하며 서로의 지식을 공유하거나, 즐거운 일상을 보낼 수 있습니다.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+<br />
 
-## Deploy on Vercel
+### 기본적인 구조
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+클래스뮤즈는 크게 유저, 클래스, 기관으로 나뉘게 됩니다.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+유저는 역할에 따라 학생, 선생님으로 분류됩니다.
+
+<br />
+
+#### 기관
+
+기관은 유저들과 클래스가 모여서 활동하는 교육 공간으로 학원이나 학교 등의 기능을 지원합니다.
+
+기관도 마찬가지로 요금제에 따라 소유할 수 있는 클래스의 수와 학생 수 등이 제한됩니다.
+
+| Plan            | Classes | Teachers | Students | Price    |
+| :-------------- | :-----: | :------: | :------: | :------- |
+| Free Plan       |  20개   |   10명   |   50명   | 0원      |
+| Pro Plan        |  100개  |   50명   |  150명   | 55900원  |
+| Addtional Plan  |  400개  |  100명   |  1000명  | 116900원 |
+| Enterprise Plan | 무제한  |  무제한  |  무제한  | 316900원 |
+
+<br />
+
+#### 학생
+
+`학생`은 3가지 `요금제`에 따라 참여할 수 있는 클래스의 수가 `제한`됩니다.
+
+| Plan            | Number of Open Classes Available | Number of Organization Profiles | Price   |
+| :-------------- | :------------------------------: | :-----------------------------: | :------ |
+| Free Plan       |               15개               |               2개               | 0원     |
+| Pro Plan        |               40개               |              10개               | 5900원  |
+| Enterprise Plan |              무제한              |              25개               | 12900원 |
+
+단, 이는 `정식버전`에서 적용되는 `요금제`이므로, `베타버전`에서는 모든 유저가 `Enterprise Plan`을 사용하게 됩니다 (금액 지불 X)
+
+또한 `학생`은 `기관`에 소속되는 `프로필`을 기본적으로 최대 2개 만들 수 있습니다.
+
+그러나 요금제를 구매할 시 최대 25개의 `기관`에 가입할 수 있으며, 그 `기관`에 소속된 클래스에는 무제한 가입 가능합니다.
+
+단 기관에 소속되지 않는 `클래스` (이하 `오픈클래스`) 에는 `기본계정`을 통해서 요금제에 따라 가입 가능합니다.
+
+<br />
+
+#### 선생님
+
+`선생님`도 `학생`과 마찬가지로 `요금제`에 따라 생성할 수 있는 클래스의 수와 참여가능한 기관의 수가 제한됩니다.
+
+| Plan            | Number of Open Classes Available | Number of Organization Profiles | Price   |
+| :-------------- | :------------------------------: | :-----------------------------: | :------ |
+| Free Plan       |               2개                |               2개               | 0원     |
+| Pro Plan        |               25개               |              40개               | 5900원  |
+| Enterprise Plan |              무제한              |             무제한              | 12900원 |
+
+또한 `선생님`은 `오픈클래스`, 즉 `기관`에 소속되지 않는 자신만의 수업을 운영할 수 있습니다.
+
+이때, 선생님은 `기본계정`을 사용해서 `오픈클래스`에서 `학생`들과 상호작용할 수 있으며, `기관`내에서는 `클래스` 개설이 기관의 요금제에 따라 달라집니다.
+
+<br />
+
+## 버전 목록
+
+| Type  | Version         | Detail                      | Uploaded     | Code                                     |
+| :---: | :-------------- | :-------------------------- | :----------- | ---------------------------------------- |
+| Alpha | V.1.0.0-alpha.1 | Add Account and Signup Page | Oct 19, 2023 | 9465591f4383500075c8653f746cc5755e7c31ef |
+
+<br />
+
+## 방문하기
+
+- [stable version](https"//classmuse.bsiku.dev)
+- [test version](https"//test.classmuse.bsiku.dev)
