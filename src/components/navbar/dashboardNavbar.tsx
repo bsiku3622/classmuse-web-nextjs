@@ -23,18 +23,12 @@ const DashboardNavbar = () => {
   useEffect(() => {
     if (!loggedIn) {
       handleMessage?.({
-        type: "default",
+        type: "error",
         message: "로그인 후에 사용할 수 있습니다. 로그인해주세요.",
       });
       router.push("/");
-    } else if (!hasProfile) {
-      handleMessage?.({
-        type: "default",
-        message: "아직 프로필이 존재하지 않습니다.",
-      });
-      router.push("/auth/signup/new_profile/select_role");
     }
-  }, [userLoading]);
+  }, [userLoading, loggedIn, hasProfile]);
 
   return (
     <>

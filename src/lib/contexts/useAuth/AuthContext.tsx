@@ -123,9 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setSignUpLoading(true);
       const { error } = await authInstance.signInWithOAuth({
         provider: provider,
-        options: {
-          redirectTo: "/dashboard",
-        },
+        options: {},
       });
       if (error) {
         console.log(error);
@@ -152,6 +150,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const createPrimaryProfile = async (payload: SupabaseProfilePayload) => {
+    setUserLoading(true);
+    setSignUpLoading(true);
     try {
       console.log({
         useruid: user?.id,
@@ -159,19 +159,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         username: payload.username,
         birthday: payload.birthday,
       });
-      const { error } = await supabaseInstance.from("user_profiles").insert({
-        useruid: user?.id,
-        handle: payload.handle,
-        username: payload.username,
-        birthday: payload.birthday,
-        is_primary_profile: true,
-      });
-      if (error) {
-        handleMessage?.({
-          message: "에러가 발생했습니다. 핸들명을 확인해주세요!",
-          type: "error",
+      const { data, error } = await supabaseInstance
+        .from("user_profiles")
+        .insert({
+          useruid: user?.id,
+          handle: payload.handle,
+          username: payload.username,
+          birthday: payload.birthday,
+          is_primary_profile: true,
         });
-        console.log(error);
+      if (error) {
+        const { data, error } = await supabaseInstance
+          .from("user_profiles")
+          .select()
+          .eq("handle", payload.handle);
+        if (data?.length != 0) {
+          handleMessage?.({
+            message: "이미 사용중인 핸들명입니다.",
+            type: "error",
+          });
+        } else {
+          handleMessage?.({
+            message:
+              "에러가 발생했습니다. 입력하신 정보를 다시 한번 확인해주세요!",
+            type: "error",
+          });
+        }
       } else {
         handleMessage?.({
           message: "프로필이 생성되었습니다",
@@ -187,6 +200,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         type: "error",
       });
     }
+    setUserLoading(false);
+    setSignUpLoading(false);
   };
 
   useEffect(() => {
