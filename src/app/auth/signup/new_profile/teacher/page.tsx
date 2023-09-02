@@ -20,8 +20,8 @@ const FORM_VALUES: FormFieldProps = {
   birthday: "",
 };
 
-const SignupNewAccountStudent = ({ params }: { params: { mode: string } }) => {
-  const { signUpLoading, emailSignUp, user, createStudentPrimaryProfile } =
+const SignupNewAccountTeacher = ({ params }: { params: { mode: string } }) => {
+  const { signUpLoading, emailSignUp, user, createTeacherPrimaryProfile } =
     useAuth();
   const { handleMessage } = useMessage();
 
@@ -31,7 +31,7 @@ const SignupNewAccountStudent = ({ params }: { params: { mode: string } }) => {
   // Form submit handler to call the above function
   const handleSumbit = (event: React.FormEvent) => {
     event.preventDefault();
-    createStudentPrimaryProfile?.(values);
+    createTeacherPrimaryProfile?.(values);
   };
   return (
     // eslint-disable-next-line react/jsx-key
@@ -139,4 +139,4 @@ const SignupNewAccountStudent = ({ params }: { params: { mode: string } }) => {
   );
 };
 
-export default SignupNewAccountStudent;
+export default SignupNewAccountTeacher;

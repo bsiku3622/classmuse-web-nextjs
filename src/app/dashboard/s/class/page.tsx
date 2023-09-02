@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Class = () => {
+const StudentClass = () => {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <h1 className="text-6xl font-bold">Welcome to Dashboard</h1>
@@ -8,4 +8,4 @@ const Class = () => {
   );
 };
 
-export default Class;
+export default StudentClass;

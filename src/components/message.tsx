@@ -7,13 +7,13 @@ import { PiWarningCircleBold } from "react-icons/pi";
 const MessageContainer = () => {
   const { messages } = useMessage();
   return (
-    <div className="absolute right-4 bottom-4 space-y-2 flex flex-col-reverse items-end">
+    <div className="absolute right-4 bottom-4 space-y-2 flex flex-col-reverse items-end lg:max-w-sm max-w-xs">
       {messages &&
         messages.map((message, index) => (
           <div
             key={index}
             className={classNames(
-              "flex space-x-2 shadow-md rounded px-4 py-3 text-shadow transition-all mt-2 w-fit right-0",
+              "flex space-x-2 shadow-md rounded px-4 py-3 text-shadow transition-all mt-2 w-fit right-0 break-all",
               message.type === "error"
                 ? "bg-red-500 text-white"
                 : message.type === "success"

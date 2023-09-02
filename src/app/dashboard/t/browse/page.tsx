@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const StudentBrowse = () => {
+const TeacherBrowse = () => {
   return (
     <div className="flex flex-col items-center justify-start py-36 min-h-screen">
       <h1 className="text-6xl font-bold">Welcome to Dashboard</h1>
@@ -8,4 +8,4 @@ const StudentBrowse = () => {
   );
 };
 
-export default StudentBrowse;
+export default TeacherBrowse;

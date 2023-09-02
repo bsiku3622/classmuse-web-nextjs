@@ -2,11 +2,11 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-  title: "홈 - 대쉬보드",
+  title: "피드 - 대쉬보드",
 };
 
 // this is server component. you could use `metadata` as well
-const StudentBrowseLayout = ({ children }: { children: React.ReactNode }) => {
+const TeacherFeedLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       {/* <title>Login to my app</title> */}
@@ -15,4 +15,4 @@ const StudentBrowseLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default StudentBrowseLayout;
+export default TeacherFeedLayout;

@@ -2,7 +2,7 @@
 
 import { createContext, useState, useEffect } from "react";
 import { authInstance, supabaseInstance } from "../../supabase";
-import { User, UserResponse } from "@supabase/supabase-js";
+import { User } from "@supabase/supabase-js";
 import { useMessage } from "../useMessage";
 import { useRouter } from "next/navigation";
 
@@ -37,7 +37,8 @@ export type AuthContextProps = {
   signOut: () => void;
 
   // user profiles
-  createPrimaryProfile: (payload: SupabaseProfilePayload) => void;
+  createStudentPrimaryProfile: (payload: SupabaseProfilePayload) => void;
+  createTeacherPrimaryProfile: (payload: SupabaseProfilePayload) => void;
 
   // setUserProfileIndex: (index: number) => void;
 };
@@ -70,6 +71,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         handleMessage?.({
           message:
             "회원가입에 실패했습니다. 이메일과 비밀번호를 다시한번 확인해주세요.",
+          type: "error",
+        });
+      } else if (payload.password.length <= 8) {
+        handleMessage?.({
+          message: "비밀번호는 8자 이상이여야 합니다.",
           type: "error",
         });
       } else {
@@ -149,7 +155,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const createPrimaryProfile = async (payload: SupabaseProfilePayload) => {
+  const createStudentPrimaryProfile = async (
+    payload: SupabaseProfilePayload
+  ) => {
     setUserLoading(true);
     setSignUpLoading(true);
     try {
@@ -167,6 +175,65 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           username: payload.username,
           birthday: payload.birthday,
           is_primary_profile: true,
+          is_teacher: true,
+        });
+      if (error) {
+        const { data, error } = await supabaseInstance
+          .from("user_profiles")
+          .select()
+          .eq("handle", payload.handle);
+        if (data?.length != 0) {
+          handleMessage?.({
+            message: "이미 사용중인 핸들명입니다.",
+            type: "error",
+          });
+        } else {
+          handleMessage?.({
+            message:
+              "에러가 발생했습니다. 입력하신 정보를 다시 한번 확인해주세요!",
+            type: "error",
+          });
+        }
+      } else {
+        handleMessage?.({
+          message: "프로필이 생성되었습니다",
+          type: "success",
+        });
+        router.push("/dashboard");
+      }
+    } catch (error: any) {
+      console.log(error);
+      handleMessage?.({
+        message:
+          "에러가 발생했습니다. 서버상 오류로, 나중에 다시 시도 바랍니다. 불편을 끼쳐드려 죄송합니다 ㅠ",
+        type: "error",
+      });
+    }
+    setUserLoading(false);
+    setSignUpLoading(false);
+  };
+
+  const createTeacherPrimaryProfile = async (
+    payload: SupabaseProfilePayload
+  ) => {
+    setUserLoading(true);
+    setSignUpLoading(true);
+    try {
+      console.log({
+        useruid: user?.id,
+        handle: payload.handle,
+        username: payload.username,
+        birthday: payload.birthday,
+      });
+      const { data, error } = await supabaseInstance
+        .from("user_profiles")
+        .insert({
+          useruid: user?.id,
+          handle: payload.handle,
+          username: payload.username,
+          birthday: payload.birthday,
+          is_primary_profile: true,
+          is_teacher: true,
         });
       if (error) {
         const { data, error } = await supabaseInstance
@@ -230,8 +297,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setUserProfileList([]);
           setHasProfile(false);
         }
+        setUserLoading(false);
       });
-      setUserLoading(false);
       console.log("user load complete.");
     };
     if (userLoading) checkLoggedIn();
@@ -258,7 +325,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         oAuthSignIn,
         signOut,
         // user profiles functions
-        createPrimaryProfile,
+        createStudentPrimaryProfile,
+        createTeacherPrimaryProfile,
       }}
     >
       {children}

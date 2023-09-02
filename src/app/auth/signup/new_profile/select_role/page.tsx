@@ -53,7 +53,7 @@ const SignupSelectRole = ({ params }: { params: { mode: string } }) => {
               저는 학생입니다.
             </Link>
             <Link
-              href="/auth/signup/new_profile/student"
+              href="/auth/signup/new_profile/teacher"
               className="block py-20 w-full font-semibold text-xl bg-indigo-500 text-white rounded-xl text-center"
             >
               저는 교사입니다.

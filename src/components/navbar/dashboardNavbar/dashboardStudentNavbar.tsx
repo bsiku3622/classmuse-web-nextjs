@@ -12,21 +12,35 @@ import { AiFillCaretDown } from "react-icons/ai";
 
 import { useAuth } from "@/lib/contexts/useAuth";
 import { useMessage } from "@/lib/contexts/useMessage";
+import classNames from "classnames";
 
-const DashboardNavbar = () => {
+const DashboardStudentNavbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [menuToggle, setMenuToggle] = useState(false);
   const { handleMessage } = useMessage();
-  const { userLoading, loggedIn, hasProfile, userProfile } = useAuth();
+  const { userLoading, loggedIn, hasProfile, userProfile, signOut } = useAuth();
 
+  // router middleware system
   useEffect(() => {
-    if (!loggedIn) {
-      handleMessage?.({
-        type: "error",
-        message: "로그인 후에 사용할 수 있습니다. 로그인해주세요.",
-      });
-      router.push("/");
+    if (!userLoading) {
+      if (!loggedIn) {
+        handleMessage?.({
+          type: "error",
+          message: "로그인 후에 사용할 수 있습니다. 로그인해주세요.",
+        });
+        router.push("/auth/login");
+      }
+      if (loggedIn && hasProfile) {
+        if (userProfile.is_teacher) {
+          handleMessage?.({
+            type: "default",
+            message:
+              "선생님 계정으로 로그인 되었습니다. 따라서 선생님 전용 대쉬보드로 이동 되었습니다.",
+          });
+          router.push("/dashboard/t/");
+        }
+      }
     }
   }, [userLoading, loggedIn, hasProfile]);
 
@@ -34,7 +48,10 @@ const DashboardNavbar = () => {
     <>
       <nav className="lg:flex hidden h-16 border-b border-gray-200 px-12 items-center">
         <div className="flex-none">
-          <Link href="/dashboard" className="flex items-center text-gray-700">
+          <Link
+            href="/dashboard/s/"
+            className="flex items-center text-gray-700"
+          >
             <FaBuffer className="w-6 h-6" />
             <span className="font-bold ps-6 pe-4 text-lg font-medium">
               클래스뮤즈
@@ -43,25 +60,27 @@ const DashboardNavbar = () => {
         </div>
         <div className="flex-auto ms-6">
           <Link
-            href="/dashboard"
+            href="/dashboard/s"
             className={`px-5 ${
-              pathname == "/dashboard" ? "text-gray-700" : "text-gray-400"
+              pathname == "/dashboard/s" ? "text-gray-700" : "text-gray-400"
             } hover:text-gray-700`}
           >
             홈
           </Link>
           <Link
-            href="/dashboard/class"
+            href="/dashboard/s/class"
             className={`px-5 ${
-              pathname == "/dashboard/class" ? "text-gray-700" : "text-gray-400"
+              pathname == "/dashboard/s/class"
+                ? "text-gray-700"
+                : "text-gray-400"
             } hover:text-gray-700`}
           >
             클래스
           </Link>
           <Link
-            href="/dashboard/browse"
+            href="/dashboard/s/browse"
             className={`px-5 ${
-              pathname == "/dashboard/browse"
+              pathname == "/dashboard/s/browse"
                 ? "text-gray-700"
                 : "text-gray-400"
             } hover:text-gray-700`}
@@ -69,9 +88,9 @@ const DashboardNavbar = () => {
             탐색
           </Link>
           <Link
-            href="/dashboard/message"
+            href="/dashboard/s/message"
             className={`px-5 ${
-              pathname == "/dashboard/message"
+              pathname == "/dashboard/s/message"
                 ? "text-gray-700"
                 : "text-gray-400"
             } hover:text-gray-700`}
@@ -80,11 +99,15 @@ const DashboardNavbar = () => {
           </Link>
         </div>
         <div className="flex-end flex items-center">
-          <div className="flex items-center h-10 border-2 border-black-500 px-4 rounded-md me-4">
+          <div
+            className={classNames(
+              "flex items-center h-10 border-2 px-4 rounded-md me-4 focus:outline-none"
+            )}
+          >
             <input
               type="text"
               placeholder="클래스뮤즈에서 검색"
-              className="w-48"
+              className="w-48 focus:outline-none"
             />
             <TfiSearch className="w-4 h-4" />
           </div>
@@ -122,7 +145,10 @@ const DashboardNavbar = () => {
       >
         {/* logo */}
         <div className="flex-auto">
-          <Link href="/" className="flex items-center text-gray-700">
+          <Link
+            href="/dashboard/s/"
+            className="flex items-center text-gray-700"
+          >
             <FaBuffer className="w-6 h-6" />
             <span className="font-bold ps-4 pe-4 text-lg font-medium">
               클래스뮤즈
@@ -186,25 +212,25 @@ const DashboardNavbar = () => {
                   className="flex-none block w-9 h-9 object-fit:cover rounded-full"
                 ></Image>
               ) : (
-                <div className="block w-9 h-9 bg-gray-700 hover:bg-gray-500 object-fit:cover rounded-full flex items-center justify-center">
+                <div className="flex-none block w-9 h-9 bg-gray-700 hover:bg-gray-500 object-fit:cover rounded-full flex items-center justify-center">
                   <p className="text-gray-100 font-semibold">
                     {userProfile?.username.substring(0, 1)}
                   </p>
                 </div>
               )}
             </div>
-            <div className="flex-1 ms-3 max-w-[16rem] flex flex-col">
-              <p className="break-words text-slate-600 hover:text-slate-900 text-lg text-start">
+            <div className="flex-1 ms-3 flex flex-col">
+              <p className="max-w-[16rem] break-words text-slate-600 hover:text-slate-900 text-lg text-start">
                 {userProfile?.username}
               </p>
-              <p className="text-slate-500 hover:text-slate-700 text-md text-start">
+              <p className="max-w-[16rem] text-slate-500 hover:text-slate-700 text-md text-start">
                 내 프로필 보기
               </p>
             </div>
-            <PiCaretRightLight className="flex-end w-6 h-6" />
+            <PiCaretRightLight className="flex-none w-6 h-6" />
           </Link>
           <Link
-            href="/dashboard"
+            href="/dashboard/s/"
             className={`px-5 ${
               pathname == "/dashboard" ? "text-gray-700" : "text-gray-400"
             } hover:text-gray-700 block py-5 px-6`}
@@ -214,7 +240,7 @@ const DashboardNavbar = () => {
           </Link>
           <hr className="mx-4 bg-gray-200 h-px" />
           <Link
-            href="/dashboard/class"
+            href="/dashboard/s/class"
             className={`px-5 ${
               pathname == "/dashboard/class" ? "text-gray-700" : "text-gray-400"
             } hover:text-gray-700 block py-5 px-6`}
@@ -224,7 +250,7 @@ const DashboardNavbar = () => {
           </Link>
           <hr className="mx-4 bg-gray-200 h-px" />
           <Link
-            href="/dashboard/browse"
+            href="/dashboard/s/browse"
             className={`px-5 ${
               pathname == "/dashboard/browse"
                 ? "text-gray-700"
@@ -236,7 +262,7 @@ const DashboardNavbar = () => {
           </Link>
           <hr className="mx-4 bg-gray-200 h-px" />
           <Link
-            href="/dashboard/message"
+            href="/dashboard/s/message"
             className={`px-5 ${
               pathname == "/dashboard/message"
                 ? "text-gray-700"
@@ -248,7 +274,10 @@ const DashboardNavbar = () => {
           </Link>
           <div className="flex flex-col justify-center py-8 px-6 absolute w-screen bottom-0 space-y-3">
             <p
-              onClick={() => setMenuToggle(false)}
+              onClick={() => {
+                setMenuToggle(false);
+                signOut?.();
+              }}
               className="h-14 text-xl px-3 py-3 flex-1 flex justify-center items-center bg-red-500 border-2 border-gray-200 hover:bg-red-200 text-slate-100 hover:text-slate-900 rounded-md transition duration-300"
             >
               {" "}
@@ -271,4 +300,4 @@ const DashboardNavbar = () => {
   );
 };
 
-export default DashboardNavbar;
+export default DashboardStudentNavbar;

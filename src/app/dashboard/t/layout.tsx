@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 
 // this is server component. you could use `metadata` as well
-const StudentBrowseLayout = ({ children }: { children: React.ReactNode }) => {
+const TeacherHomeLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       {/* <title>Login to my app</title> */}
@@ -15,4 +15,4 @@ const StudentBrowseLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export default StudentBrowseLayout;
+export default TeacherHomeLayout;

@@ -76,7 +76,7 @@ const Signup = ({ params }: { params: { mode: string } }) => {
                 id="password"
                 name="password"
                 type="password"
-                placeholder="비밀번호 (8자 이상)"
+                placeholder="비밀번호"
                 required
                 value={values.password}
                 onChange={handleChange}

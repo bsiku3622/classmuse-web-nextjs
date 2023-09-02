@@ -13,7 +13,7 @@ const AuthNavbar = () => {
   const { handleMessage } = useMessage();
 
   useEffect(() => {
-    if (loggedIn) {
+    if (!userLoading && loggedIn) {
       if (hasProfile) {
         handleMessage?.({ type: "error", message: "이미 로그인되었습니다." });
         router.push("/");
