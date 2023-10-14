@@ -9,7 +9,6 @@ import DashboardStudentNavbar from "./dashboardNavbar/dashboardStudentNavbar";
 import PrimaryNavbar from "./primaryNavbar";
 import SignedPrimaryNavbar from "./signedPrimaryNavbar";
 import AuthNavbar from "./authNavbar";
-import { log } from "console";
 import DashboardTeacherNavbar from "./dashboardNavbar/dashboardTeacherNavbar";
 
 const Navbar = () => {
@@ -19,40 +18,34 @@ const Navbar = () => {
   const { handleMessage } = useMessage();
 
   useEffect(() => {
-    if (
-      loggedIn &&
-      !hasProfile &&
-      !pathname.startsWith("/auth/signup/new_profile") &&
-      !userLoading
-    ) {
-      handleMessage?.({
-        type: "default",
-        message: "아직 프로필이 존재하지 않습니다.",
-      });
-      router.push("/auth/signup/new_profile/select_role");
-    }
-    if (pathname == "/dashboard") {
-      if (userProfile.is_teacher) {
+    if (!userLoading) {
+      if (
+        loggedIn &&
+        !hasProfile &&
+        !pathname.startsWith("/auth/signup/new_profile")
+      ) {
         handleMessage?.({
           type: "default",
-          message: "선생님 계정으로 로그인 되었습니다.",
+          message: "아직 프로필이 존재하지 않습니다.",
         });
-        router.push("/dashboard/t/");
-      } else if (!userProfile.is_teacher) {
-        handleMessage?.({
-          type: "default",
-          message: "학생 계정으로 로그인 되었습니다.",
-        });
-        router.push("/dashboard/s/");
-      } else {
-        handleMessage?.({
-          type: "error",
-          message: "계정 데이터에 오류가 있습니다.",
-        });
-        router.push("/");
+        router.push("/auth/signup/new_profile/select_role");
+      }
+
+      if (pathname == "/dashboard") {
+        if (userProfile.is_teacher) {
+          router.push("/dashboard/t/");
+        } else if (!userProfile.is_teacher) {
+          router.push("/dashboard/s/");
+        } else {
+          handleMessage?.({
+            type: "error",
+            message: "계정 데이터에 오류가 있습니다.",
+          });
+          router.push("/");
+        }
       }
     }
-  }, [userLoading, loggedIn, hasProfile]);
+  }, [userLoading, loggedIn, hasProfile, pathname]);
 
   if (!userLoading) {
     if (pathname.startsWith("/auth")) {

@@ -7,7 +7,7 @@ const Dashboard = () => {
   const { userLoading } = useAuth();
 
   return (
-    <div className="flex flex-col items-center justify-start py-36 min-h-screen">
+    <div className="flex flex-col items-center justify-start py-36 w-screen">
       {userLoading ? (
         <h1 className="text-6xl font-bold">Loading</h1>
       ) : (

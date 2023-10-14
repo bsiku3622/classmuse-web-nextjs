@@ -31,7 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <AuthProvider>
           <body className={`w-screen ${PretendardVariable.className}`}>
             <Navbar />
-            <main className="mx-4">{children}</main>
+            <main>{children}</main>
             <MessageContainer />
           </body>
         </AuthProvider>
